@@ -11,19 +11,23 @@ class MessageRepository {
 
     init {
         items[1] = Message(
-            text = "Lorem ipsum dolor sit amet, no sit sonet noster dignissim, sed omnes omnesque ea, at movet admodum luptatum cum. Pri no malis petentium. Erat facer harum at ius, et duo amet feugiat. Et mutat simul mel, est eu amet senserit reprimique. Meis tempor euripidis et vel, cum viris nihil an.\n",
-            author = User("Test user 1"),
+            text = "ABA",
+            author = User("Test user 1", "test"),
             created = Calendar.getInstance().time
         )
         items[2] = Message(
-            text = "Lorem ipsum dolor sit amet, no sit sonet noster dignissim, sed omnes omnesque ea, at movet admodum luptatum cum. Pri no malis petentium. Erat facer harum at ius, et duo amet feugiat. Et mutat simul mel, est eu amet senserit reprimique. Meis tempor euripidis et vel, cum viris nihil an.\n",
-            author = User("Test user 2"),
+            text = "CABA",
+            author = User("Test user 2", "test"),
             created = Calendar.getInstance().time
         )
     }
 
     fun getById(id: Int): Message {
         return items[id] ?: throw RuntimeException()
+    }
+
+    fun findAll(): List<Message>  {
+        return items.values.toList()
     }
 
     companion object {

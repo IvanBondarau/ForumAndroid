@@ -1,16 +1,14 @@
 package by.bsuir.ivan_bondarau.forum.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import by.bsuir.ivan_bondarau.forum.repository.MessageRepository
 import by.bsuir.ivan_bondarau.forum.model.Message
+import by.bsuir.ivan_bondarau.forum.repository.MessageRepository
 
 class MessageViewModel(private val messageRepository: MessageRepository) : ViewModel() {
 
-    var message = MutableLiveData<Message>()
+    val messages = messageRepository.findAll()
 
-    fun setMessage(messageId: Int) {
-        message.value = messageRepository.getById(messageId)
-    }
 
 }

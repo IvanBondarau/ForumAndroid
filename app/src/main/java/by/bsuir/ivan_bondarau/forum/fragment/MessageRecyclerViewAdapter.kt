@@ -1,19 +1,21 @@
 package by.bsuir.ivan_bondarau.forum.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import by.bsuir.ivan_bondarau.forum.R
+import by.bsuir.ivan_bondarau.forum.model.Message
 import by.bsuir.ivan_bondarau.forum.viewmodel.MessageViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MessageRecyclerViewAdapter(
-    private val values: List<MessageViewModel>
+    private val messages: List<Message>
 ) : RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -22,17 +24,15 @@ class MessageRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.creatorView.text = item.message.value?.author?.login
-        holder.textView.text = item.message.value?.text
-        holder.dateView.text =
-            if (item.message.value != null) dateFormat.format(item.message.value!!.created) else null
+        val item = messages[position]
+        holder.creatorView.text = item.author.username
+        holder.textView.text = item.text
+        holder.dateView.text = dateFormat.format(item.created)
 
     }
 
     override fun getItemCount(): Int {
-        Log.i("MainActivity", values.size.toString())
-        return values.size
+        return messages.size
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
