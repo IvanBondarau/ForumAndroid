@@ -1,20 +1,24 @@
 package by.bsuir.ivan_bondarau.forum.repository
 
+import by.bsuir.ivan_bondarau.forum.dao.UserDao
 import by.bsuir.ivan_bondarau.forum.model.User
 
-class UserRepository {
+class UserRepository(private val userDao: UserDao) {
 
-    private val items: MutableList<User> = mutableListOf()
 
     init {
-        items.add(User("admin", "admin"));
+        if (userDao.findByUsername("admin") == null) {
+            userDao.insert(User(1, "admin", "admin"))
+        }
     }
 
     fun exists(user: User): Boolean {
-        return items.contains(user)
+        val databaseUser = userDao.findByUsername(user.username)
+        return if (databaseUser == null) {
+            false
+        } else {
+            databaseUser.password == user.password
+        }
     }
 
-    companion object {
-        val Instance = UserRepository()
-    }
 }

@@ -6,17 +6,28 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import by.bsuir.ivan_bondarau.forum.R
+import by.bsuir.ivan_bondarau.forum.database.AppDatabase
 import by.bsuir.ivan_bondarau.forum.factory.LoginViewModelFactory
 import by.bsuir.ivan_bondarau.forum.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
 
-    private val factory = LoginViewModelFactory.Instance
+    lateinit var database: AppDatabase
+
+    private lateinit var factory: LoginViewModelFactory
     private lateinit var loginViewModel: LoginViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppDatabase.applicationContext = applicationContext
+        database = AppDatabase.Instance
+
+        LoginViewModelFactory.userDao = database.userDao()
+        factory = LoginViewModelFactory.Instance
+
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
         setContentView(R.layout.activity_login)
     }

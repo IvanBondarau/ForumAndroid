@@ -12,12 +12,12 @@ class MessageRepository {
     init {
         items[1] = Message(
             text = "ABA",
-            author = User("Test user 1", "test"),
+            author = User(1, "Test user 1", "test"),
             created = Calendar.getInstance().time
         )
         items[2] = Message(
             text = "CABA",
-            author = User("Test user 2", "test"),
+            author = User(2, "Test user 2", "test"),
             created = Calendar.getInstance().time
         )
     }
