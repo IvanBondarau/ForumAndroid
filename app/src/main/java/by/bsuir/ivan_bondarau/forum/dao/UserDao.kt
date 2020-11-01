@@ -11,6 +11,10 @@ interface UserDao {
     @Query("select * from user where username = :username limit 1")
     fun findByUsername(username: String): User?
 
+    @Query("select * from user where id = :id limit 1")
+    fun findById(id: Int): User?
+
+
     @Insert
     fun insert(user: User)
 }

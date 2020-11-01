@@ -5,8 +5,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.fragment.MessageFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : FragmentActivity() {
 
 

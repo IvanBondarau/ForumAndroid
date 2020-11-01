@@ -8,12 +8,13 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.model.Message
+import by.bsuir.ivan_bondarau.forum.model.MessageWithAuthor
 import by.bsuir.ivan_bondarau.forum.viewmodel.MessageViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MessageRecyclerViewAdapter(
-    private val messages: List<Message>
+    private val messages: List<MessageWithAuthor>
 ) : RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder>() {
 
 
@@ -25,9 +26,11 @@ class MessageRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = messages[position]
-        holder.creatorView.text = item.author.username
-        holder.textView.text = item.text
-        holder.dateView.text = dateFormat.format(item.created)
+        holder.creatorView.text =  item.author?.username ?: ""
+        holder.textView.text = item.message.text
+        holder.dateView.text = if (item.message.created != null)
+            dateFormat.format(item.message.created)
+            else ""
 
     }
 

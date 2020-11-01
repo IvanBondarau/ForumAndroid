@@ -12,17 +12,19 @@ import androidx.lifecycle.ViewModelProvider
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.factory.MessageViewModelFactory
 import by.bsuir.ivan_bondarau.forum.model.Message
+import by.bsuir.ivan_bondarau.forum.model.MessageWithAuthor
 import by.bsuir.ivan_bondarau.forum.viewmodel.MessageViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * A fragment representing a list of Items.
- */
+@AndroidEntryPoint
 class MessageFragment: Fragment() {
 
-    private val factory = MessageViewModelFactory.Instance
+    @Inject
+    lateinit var factory: MessageViewModelFactory
 
     private lateinit var messageViewModel: MessageViewModel
-    private lateinit var messages: MutableList<Message>
+    private lateinit var messages: MutableList<MessageWithAuthor>
 
     private lateinit var recyclerViewAdapter: MessageRecyclerViewAdapter
 

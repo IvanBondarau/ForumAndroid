@@ -1,12 +1,21 @@
 package by.bsuir.ivan_bondarau.forum.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
-@Entity
-data class User(
-    @PrimaryKey val id: Int,
-    @ColumnInfo(name = "username") val username: String,
-    @ColumnInfo(name = "password") val password: String
+@Entity(
+    indices = [Index(
+        value = ["username"],
+        unique = true
+    )]
 )
+data class User(
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @ColumnInfo(name = "username") val username: String,
+    @ColumnInfo(name = "email")    var email: String,
+    @ColumnInfo(name = "password") var password: String,
+    @Ignore                        var passwordRepeat: String? = null
+) {
+    constructor(id: Int?, username: String, email: String, password: String)
+        : this(id, username, email, password, null)
+
+}
