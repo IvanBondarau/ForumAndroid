@@ -43,7 +43,7 @@ class SignUpActivity : AppCompatActivity() {
         this.errorText.text = result
 
         if (result == "OK") {
-            val startMain = Intent(this, MainActivity::class.java)
+            val startMain = Intent(this, TopicActivity::class.java)
             finish()
             startActivity(startMain)
         }

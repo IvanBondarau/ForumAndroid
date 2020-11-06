@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "6d3d79f2bc44c9681a63d6c6cca83ef1",
+    "identityHash": "367a423a6301f1ed7dc18baf503b2dea",
     "entities": [
       {
         "tableName": "User",
@@ -53,7 +53,7 @@
       },
       {
         "tableName": "Message",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `text` TEXT NOT NULL, `authorId` INTEGER NOT NULL, `created` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `text` TEXT NOT NULL, `authorId` INTEGER NOT NULL, `created` TEXT, `topicId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -78,6 +78,12 @@
             "columnName": "created",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "topicId",
+            "columnName": "topicId",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -93,7 +99,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6d3d79f2bc44c9681a63d6c6cca83ef1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '367a423a6301f1ed7dc18baf503b2dea')"
     ]
   }
 }

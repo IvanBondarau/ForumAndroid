@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.editTextPassword).text.toString()
 
         if (loginViewModel.logIn(username, password)) {
-            val startMain = Intent(this, MainActivity::class.java)
+            val startMain = Intent(this, TopicActivity::class.java)
             finish()
             startActivity(startMain)
         }

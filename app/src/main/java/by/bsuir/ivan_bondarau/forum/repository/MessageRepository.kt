@@ -12,26 +12,32 @@ class MessageRepository @Inject constructor(private val messageDao: MessageDao, 
 
 
     init {
-        if (messageDao.findById(1) == null) {
-            messageDao.insert(
-                Message(
-                    id = 1,
-                    text = "ABA",
-                    authorId = 1,
-                    created = Calendar.getInstance().time
-                )
-            )
+        if (messageDao.findById(1) != null) {
+            messageDao.delete(messageDao.findById(1)!!)
         }
-        if (messageDao.findById(2) == null) {
-            messageDao.insert(
-                Message(
-                    id = 2,
-                    text = "CABA",
-                    authorId = 2,
-                    created = Calendar.getInstance().time
-                )
-            )
+        if (messageDao.findById(2) != null) {
+            messageDao.delete(messageDao.findById(2)!!)
         }
+
+        messageDao.insert(
+            Message(
+                id = 1,
+                text = "ABA",
+                authorId = 1,
+                created = Calendar.getInstance().time,
+                topicId = 1
+            )
+        )
+
+        messageDao.insert(
+            Message(
+                id = 2,
+                text = "CABA",
+                authorId = 2,
+                created = Calendar.getInstance().time,
+                topicId = 2
+            )
+        )
     }
 
 
@@ -39,5 +45,10 @@ class MessageRepository @Inject constructor(private val messageDao: MessageDao, 
         = messageDao.findAll().map {
             message -> MessageWithAuthor(message, userDao.findById(message.authorId))
         }
+
+    fun findAllByTopicId(topicId: Int): List<MessageWithAuthor>
+        = messageDao.findByTopicId(topicId).map {
+            message -> MessageWithAuthor(message, userDao.findById(message.authorId))
+    }
 
 }

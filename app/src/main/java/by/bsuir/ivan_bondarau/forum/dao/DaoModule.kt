@@ -20,4 +20,9 @@ object DaoModule {
         return appDatabase.messageDao()
     }
 
+    @Provides
+    fun topicDao(appDatabase: AppDatabase): TopicDao {
+        return appDatabase.topicDao()
+    }
+
 }

@@ -13,5 +13,6 @@ data class Message(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "authorId") val authorId: Int,
-    @ColumnInfo(name = "created") val created: Date?
+    @ColumnInfo(name = "created") val created: Date?,
+    @ColumnInfo(name = "topicId") val  topicId: Int
 )
