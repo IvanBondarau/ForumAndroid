@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.factory.SignUpViewModelFactory
+import by.bsuir.ivan_bondarau.forum.holder.UserHolder
 import by.bsuir.ivan_bondarau.forum.model.User
 import by.bsuir.ivan_bondarau.forum.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +44,8 @@ class SignUpActivity : AppCompatActivity() {
         this.errorText.text = result
 
         if (result == "OK") {
-            val startMain = Intent(this, TopicActivity::class.java)
+            UserHolder.user = user
+            val startMain = Intent(this, MainActivity::class.java)
             finish()
             startActivity(startMain)
         }

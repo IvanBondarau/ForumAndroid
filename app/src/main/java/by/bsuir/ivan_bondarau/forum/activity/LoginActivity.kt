@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
 import by.bsuir.ivan_bondarau.forum.R
-import by.bsuir.ivan_bondarau.forum.database.AppDatabase
 import by.bsuir.ivan_bondarau.forum.factory.LoginViewModelFactory
+import by.bsuir.ivan_bondarau.forum.holder.UserHolder
 import by.bsuir.ivan_bondarau.forum.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -33,9 +32,10 @@ class LoginActivity : AppCompatActivity() {
     fun onLogIn(view: View) {
         val username = findViewById<EditText>(R.id.editTextUsername).text.toString()
         val password = findViewById<EditText>(R.id.editTextPassword).text.toString()
-
-        if (loginViewModel.logIn(username, password)) {
-            val startMain = Intent(this, TopicActivity::class.java)
+        val user = loginViewModel.logIn(username, password)
+        if (user != null) {
+            UserHolder.user = user
+            val startMain = Intent(this, MainActivity::class.java)
             finish()
             startActivity(startMain)
         }

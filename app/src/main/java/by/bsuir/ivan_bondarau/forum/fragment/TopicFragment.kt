@@ -1,57 +1,49 @@
 package by.bsuir.ivan_bondarau.forum.fragment
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Button
+import android.widget.EditText
+import androidx.fragment.app.commit
 import by.bsuir.ivan_bondarau.forum.R
-import by.bsuir.ivan_bondarau.forum.factory.TopicViewModelFactory
-import by.bsuir.ivan_bondarau.forum.viewmodel.TopicViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class TopicFragment : Fragment() {
 
-    @Inject
-    lateinit var topicViewModelFactory: TopicViewModelFactory
-    lateinit var topicViewModel: TopicViewModel
+    private lateinit var topicListFragment: TopicListFragment
+    private lateinit var topicInputFragment: InputTopicFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        topicViewModel = ViewModelProvider(this, topicViewModelFactory)
-            .get(TopicViewModel::class.java)
+
+        topicInputFragment = InputTopicFragment.newInstance()
+        topicListFragment = TopicListFragment.newInstance()
+
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_topic_item_list, container, false)
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-                adapter = TopicRecyclerViewAdapter(topicViewModel.topics,
-                    activity?.supportFragmentManager!!
-                )
-            }
-        }
+        val view = inflater.inflate(R.layout.fragment_topic, container, false)
 
+        childFragmentManager.commit {
+            replace(R.id.main_container, topicListFragment, "topicList")
+            replace(R.id.bottom_container, topicInputFragment, "topicInput")
+        }
+        childFragmentManager.executePendingTransactions()
         return view
     }
 
     companion object {
-
         @JvmStatic
-        fun newInstance() =
-            TopicFragment()
-
+        fun newInstance(): TopicFragment {
+            return TopicFragment()
+        }
     }
 }

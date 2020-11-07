@@ -11,26 +11,10 @@ class TopicRepository @Inject constructor(
     private val messageDao: MessageDao
 ) {
 
-    init {
-        if (topicDao.findById(1) == null) {
-            topicDao.insert(
-                Topic (
-                    1,
-                    "Test topic 1",
-                    Calendar.getInstance().time
-                )
-            )
-        }
 
-        if (topicDao.findById(2) == null) {
-            topicDao.insert(
-                Topic (
-                    2,
-                    "Test topic 2",
-                    Calendar.getInstance().time
-                )
-            )
-        }
+    fun create(topic: Topic) {
+        val id = topicDao.insert(topic)
+        topic.id = id.toInt()
     }
 
     fun findAll(): List<Topic>
@@ -38,7 +22,7 @@ class TopicRepository @Inject constructor(
         .map {
             it ->
             it.lastMessageDate = messageDao.findTopicLastMessage(it.id!!)?.created
-            it.messagesCount = messageDao.countTopicMessages(it.id)
+            it.messagesCount = messageDao.countTopicMessages(it.id!!)
             it
         }
 }

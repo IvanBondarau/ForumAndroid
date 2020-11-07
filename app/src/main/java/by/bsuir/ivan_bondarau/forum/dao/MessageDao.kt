@@ -1,9 +1,6 @@
 package by.bsuir.ivan_bondarau.forum.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import by.bsuir.ivan_bondarau.forum.model.Message
 
 @Dao
@@ -16,9 +13,11 @@ interface MessageDao {
     fun findById(id: Int): Message?
 
     @Insert
+    @Transaction
     fun insert(message: Message)
 
-    @Query("select * from message where topicId = :topicId")
+    @Query("select * from message where topicId = :topicId order by created desc")
+    @Transaction
     fun findByTopicId(topicId: Int): List<Message>
 
     @Query("select * from message where topicId = :topicId order by created desc limit 1")
@@ -29,4 +28,7 @@ interface MessageDao {
 
     @Delete
     fun delete(message: Message)
+
+    @Query("DELETE FROM MESSAGE")
+    fun deleteAll()
 }

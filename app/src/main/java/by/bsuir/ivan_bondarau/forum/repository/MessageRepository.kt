@@ -11,35 +11,6 @@ import javax.inject.Inject
 class MessageRepository @Inject constructor(private val messageDao: MessageDao, private val userDao: UserDao) {
 
 
-    init {
-        if (messageDao.findById(1) != null) {
-            messageDao.delete(messageDao.findById(1)!!)
-        }
-        if (messageDao.findById(2) != null) {
-            messageDao.delete(messageDao.findById(2)!!)
-        }
-
-        messageDao.insert(
-            Message(
-                id = 1,
-                text = "ABA",
-                authorId = 1,
-                created = Calendar.getInstance().time,
-                topicId = 1
-            )
-        )
-
-        messageDao.insert(
-            Message(
-                id = 2,
-                text = "CABA",
-                authorId = 2,
-                created = Calendar.getInstance().time,
-                topicId = 2
-            )
-        )
-    }
-
 
     fun findAll(): List<MessageWithAuthor>
         = messageDao.findAll().map {
@@ -51,4 +22,7 @@ class MessageRepository @Inject constructor(private val messageDao: MessageDao, 
             message -> MessageWithAuthor(message, userDao.findById(message.authorId))
     }
 
+    fun save(message: Message) {
+        messageDao.insert(message)
+    }
 }

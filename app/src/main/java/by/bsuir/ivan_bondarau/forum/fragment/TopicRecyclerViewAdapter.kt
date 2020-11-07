@@ -1,6 +1,5 @@
 package by.bsuir.ivan_bondarau.forum.fragment
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +8,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.model.Topic
 
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.logging.Logger
 
 class TopicRecyclerViewAdapter(
-    private val topics: List<Topic>,
+    val topics: MutableList<Topic>,
     private val fragmentManager: FragmentManager
 ) : RecyclerView.Adapter<TopicRecyclerViewAdapter.ViewHolder>() {
 
@@ -41,11 +38,12 @@ class TopicRecyclerViewAdapter(
 
         holder.card.setOnClickListener {
             val item = topics[position]
-            val fragment = MessageFragment.newInstance(item.id!!)
-            Log.d("TEST", fragment.arguments.toString())
+
+            val messageFragment = MessageFragment.newInstance(item.id!!)
 
             fragmentManager.commit {
-                replace(R.id.root_container, fragment)
+                replace(R.id.root_container, messageFragment, "messageFragment")
+                addToBackStack(null)
             }
             fragmentManager.executePendingTransactions()
 

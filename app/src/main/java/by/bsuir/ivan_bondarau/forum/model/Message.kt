@@ -10,7 +10,7 @@ import java.util.*
 @Entity
 @TypeConverters(TimestampConverter::class)
 data class Message(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Int?,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "authorId") val authorId: Int,
     @ColumnInfo(name = "created") val created: Date?,

@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MessageRecyclerViewAdapter(
-    private val messages: List<MessageWithAuthor>
+    var messages: MutableList<MessageWithAuthor>
 ) : RecyclerView.Adapter<MessageRecyclerViewAdapter.ViewHolder>() {
 
 

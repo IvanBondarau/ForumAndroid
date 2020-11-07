@@ -3,6 +3,10 @@ package by.bsuir.ivan_bondarau.forum.viewmodel
 import androidx.lifecycle.ViewModel
 import by.bsuir.ivan_bondarau.forum.repository.TopicRepository
 
-class TopicViewModel(topicRepository: TopicRepository ): ViewModel() {
-    val topics = topicRepository.findAll()
+class TopicViewModel(private val topicRepository: TopicRepository ): ViewModel() {
+    var topics = topicRepository.findAll()
+
+    fun reloadTopics() {
+        topics = topicRepository.findAll()
+    }
 }

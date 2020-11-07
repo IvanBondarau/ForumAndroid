@@ -6,8 +6,9 @@
     android:name="by.bsuir.ivan_bondarau.forum.fragment.MessageFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/light_background"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".fragment.MessageFragment"
+    tools:context=".fragment.MessageListFragment"
     tools:listitem="@layout/fragment_message_item" />

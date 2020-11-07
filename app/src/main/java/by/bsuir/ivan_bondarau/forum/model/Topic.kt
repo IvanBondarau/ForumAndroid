@@ -7,7 +7,7 @@ import java.util.*
 @Entity
 @TypeConverters(TimestampConverter::class)
 data class Topic(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @PrimaryKey(autoGenerate = true) var id: Int? = null,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name="creationDate") val creationDate: Date,
     @Ignore var lastMessageDate: Date? = null,

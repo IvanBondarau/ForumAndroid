@@ -9,7 +9,7 @@ import by.bsuir.ivan_bondarau.forum.model.Message
 import by.bsuir.ivan_bondarau.forum.model.Topic
 import by.bsuir.ivan_bondarau.forum.model.User
 
-@Database(entities = [User::class, Message::class, Topic::class], version = 5)
+@Database(entities = [User::class, Message::class, Topic::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
