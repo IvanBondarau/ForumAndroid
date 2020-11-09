@@ -11,6 +11,4 @@ class MessageViewModel(private val messageRepository: MessageRepository, private
         messages = messageRepository.findAllByTopicId(topicId)
     }
 
-
-
 }

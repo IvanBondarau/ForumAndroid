@@ -1,31 +1,39 @@
 package by.bsuir.ivan_bondarau.forum.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.addCallback
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import by.bsuir.ivan_bondarau.forum.R
-import by.bsuir.ivan_bondarau.forum.fragment.InputTopicFragment
+import by.bsuir.ivan_bondarau.forum.fragment.SettingsFragment
 import by.bsuir.ivan_bondarau.forum.fragment.TopicFragment
-import by.bsuir.ivan_bondarau.forum.fragment.TopicListFragment
+import by.bsuir.ivan_bondarau.forum.holder.UserHolder
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    var useChildFragmentManager: Boolean = false
+    private lateinit var topicFragment: TopicFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
 
-        val fragment = TopicFragment.newInstance()
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        topicFragment = TopicFragment.newInstance()
 
         supportFragmentManager.commit {
-            add(R.id.root_container, fragment, "topicFragment")
+            add(R.id.root_container, topicFragment, "topicFragment")
         }
     }
 
@@ -36,21 +44,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id: Int = item.getItemId()
-        return if (id == R.id.action_settings) {
-            true
-        } else super.onOptionsItemSelected(item)
+        if (item.itemId == R.id.settings) {
+            val fragment: SettingsFragment = SettingsFragment.newInstance()
+            supportFragmentManager.commit {
+                replace(R.id.root_container, fragment, "settingsFragment")
+                addToBackStack(null)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
+
+        if (useChildFragmentManager) {
+            topicFragment.childFragmentManager.popBackStack()
+            topicFragment.setActionButtonVisible()
+            useChildFragmentManager = false
+            return
+        }
         if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStackImmediate()
         } else {
-            Log.d("ACt", "EMPTY")
             super.onBackPressed()
         }
+    }
+
+
+    fun disableKeyboard() {
+
+        val inputManager: InputMethodManager? = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+
+        inputManager?.hideSoftInputFromWindow(
+            currentFocus?.windowToken,
+            0
+        )
+    }
+
+    fun logOut() {
+        UserHolder.user = null
+        val startLogin = Intent(this, LoginActivity::class.java)
+        finish()
+        startActivity(startLogin)
     }
 }

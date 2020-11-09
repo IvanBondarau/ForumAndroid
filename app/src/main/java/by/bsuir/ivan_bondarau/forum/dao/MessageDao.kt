@@ -16,11 +16,11 @@ interface MessageDao {
     @Transaction
     fun insert(message: Message)
 
-    @Query("select * from message where topicId = :topicId order by created desc")
+    @Query("select * from message where topicId = :topicId order by creationDate desc")
     @Transaction
     fun findByTopicId(topicId: Int): List<Message>
 
-    @Query("select * from message where topicId = :topicId order by created desc limit 1")
+    @Query("select * from message where topicId = :topicId order by creationDate desc limit 1")
     fun findTopicLastMessage(topicId: Int): Message?
 
     @Query("select count(*) from message where topicId = :topicId")

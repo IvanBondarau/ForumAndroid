@@ -28,8 +28,8 @@ class MessageRecyclerViewAdapter(
         val item = messages[position]
         holder.creatorView.text =  item.author?.username ?: ""
         holder.textView.text = item.message.text
-        holder.dateView.text = if (item.message.created != null)
-            dateFormat.format(item.message.created)
+        holder.dateView.text = if (item.message.creationDate != null)
+            dateFormat.format(item.message.creationDate)
             else ""
 
     }

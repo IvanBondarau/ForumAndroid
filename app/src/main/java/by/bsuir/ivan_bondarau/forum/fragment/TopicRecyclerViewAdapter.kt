@@ -39,7 +39,7 @@ class TopicRecyclerViewAdapter(
         holder.card.setOnClickListener {
             val item = topics[position]
 
-            val messageFragment = MessageFragment.newInstance(item.id!!)
+            val messageFragment = MessageFragment.newInstance(item.topicId!!)
 
             fragmentManager.commit {
                 replace(R.id.root_container, messageFragment, "messageFragment")

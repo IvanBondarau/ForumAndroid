@@ -25,4 +25,9 @@ object DaoModule {
         return appDatabase.topicDao()
     }
 
+    @Provides
+    fun labelDao(appDatabase: AppDatabase): LabelDao {
+        return appDatabase.labelDao()
+    }
+
 }
