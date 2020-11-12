@@ -1,7 +1,6 @@
 package by.bsuir.ivan_bondarau.forum.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +26,7 @@ class TopicListFragment : Fragment(), Observer {
     lateinit var topicViewModel: TopicViewModel
     lateinit var topics: MutableList<Topic>
     lateinit var recyclerViewAdapter: TopicRecyclerViewAdapter
+
     @Inject
     lateinit var topicSyncTask: TopicSyncTask
 
@@ -36,8 +36,10 @@ class TopicListFragment : Fragment(), Observer {
         topicViewModel = ViewModelProvider(this, topicViewModelFactory)
             .get(TopicViewModel::class.java)
         topics = topicViewModel.topics.toMutableList()
-        recyclerViewAdapter = TopicRecyclerViewAdapter(topics,
-            activity?.supportFragmentManager!!)
+        recyclerViewAdapter = TopicRecyclerViewAdapter(
+            topics,
+            activity?.supportFragmentManager!!
+        )
     }
 
     override fun onCreateView(

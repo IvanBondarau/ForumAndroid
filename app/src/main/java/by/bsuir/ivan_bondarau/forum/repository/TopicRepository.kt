@@ -1,13 +1,10 @@
 package by.bsuir.ivan_bondarau.forum.repository
 
-import by.bsuir.ivan_bondarau.forum.dao.LabelDao
 import by.bsuir.ivan_bondarau.forum.dao.MessageDao
 import by.bsuir.ivan_bondarau.forum.dao.TopicDao
 import by.bsuir.ivan_bondarau.forum.model.Topic
 import by.bsuir.ivan_bondarau.forum.model.TopicWithLabels
 import by.bsuir.ivan_bondarau.forum.service.TopicService
-import kotlinx.coroutines.awaitAll
-import retrofit2.await
 import javax.inject.Inject
 
 class TopicRepository @Inject constructor(
@@ -21,7 +18,8 @@ class TopicRepository @Inject constructor(
 
 
     fun create(topic: Topic) {
-        val result = topicService.insert(topic = TopicWithLabels(topic, setOf()).toDto()).execute().body()
+        val result =
+            topicService.insert(topic = TopicWithLabels(topic, setOf()).toDto()).execute().body()
 
         topic.topicId = result!!.topicId
         topicDao.insert(topic)
@@ -29,7 +27,11 @@ class TopicRepository @Inject constructor(
 
     }
 
-     fun findAll(): List<Topic> {
+    fun findById(id: Int): Topic? {
+        return topicDao.findById(id)
+    }
+
+    fun findAll(): List<Topic> {
         return topicDao.findAll()
             .map { it ->
                 it.lastMessageDate = messageDao.findTopicLastMessage(it.topicId!!)?.creationDate

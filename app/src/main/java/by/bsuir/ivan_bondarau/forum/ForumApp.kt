@@ -1,7 +1,6 @@
 package by.bsuir.ivan_bondarau.forum
 
 import android.app.Application
-import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import by.bsuir.ivan_bondarau.forum.sync.MessageSyncTask

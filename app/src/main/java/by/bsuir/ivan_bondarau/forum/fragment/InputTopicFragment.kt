@@ -15,9 +15,6 @@ import by.bsuir.ivan_bondarau.forum.model.Topic
 import by.bsuir.ivan_bondarau.forum.repository.MessageRepository
 import by.bsuir.ivan_bondarau.forum.repository.TopicRepository
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
 
@@ -61,7 +58,7 @@ class InputTopicFragment : Fragment() {
         )
         topicRepository.create(topic)
 
-        val message = Message(null, text, user!!.id!!, date, topic.topicId!!)
+        val message = Message(null, text, date, topic.topicId!!, user!!.id!!)
         messageRepository.save(message)
 
         (parentFragment?.childFragmentManager

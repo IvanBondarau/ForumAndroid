@@ -4,7 +4,6 @@ import by.bsuir.ivan_bondarau.forum.model.Label
 import by.bsuir.ivan_bondarau.forum.model.Topic
 import by.bsuir.ivan_bondarau.forum.model.TopicWithLabels
 import java.util.*
-import java.util.stream.Collectors
 
 data class TopicDto(
     var topicId: Int? = null,

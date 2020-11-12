@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         unique = true
     )]
 )
-data class Label (
+data class Label(
     @PrimaryKey(autoGenerate = true) var labelId: Int?,
-    @ColumnInfo(name="name") val name: String
+    @ColumnInfo(name = "name") val name: String
 )

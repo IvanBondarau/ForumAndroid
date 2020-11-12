@@ -6,7 +6,8 @@ import by.bsuir.ivan_bondarau.forum.repository.UserRepository
 import by.bsuir.ivan_bondarau.forum.validator.UserSignUpValidator
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
 
     private val validator: UserSignUpValidator = UserSignUpValidator(userRepository)
 

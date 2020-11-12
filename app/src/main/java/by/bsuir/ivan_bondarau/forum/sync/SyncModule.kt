@@ -4,6 +4,7 @@ import by.bsuir.ivan_bondarau.forum.dao.MessageDao
 import by.bsuir.ivan_bondarau.forum.dao.UserDao
 import by.bsuir.ivan_bondarau.forum.model.Message
 import by.bsuir.ivan_bondarau.forum.model.Topic
+import by.bsuir.ivan_bondarau.forum.queue.MessageQueue
 import by.bsuir.ivan_bondarau.forum.queue.TopicQueue
 import by.bsuir.ivan_bondarau.forum.service.MessageService
 import by.bsuir.ivan_bondarau.forum.service.UserService
@@ -28,10 +29,11 @@ class SyncModule {
         messageDao: MessageDao,
         messageService: MessageService,
         messageQueue: Queue<Message>,
-        messageQueueLock: Lock
+        messageQueueLock: Lock,
+        messageUpdateQueue: MessageQueue
     ): MessageSyncTask {
 
-        return MessageSyncTask(messageDao, messageService, messageQueue, messageQueueLock)
+        return MessageSyncTask(messageDao, messageService, messageQueue, messageQueueLock, messageUpdateQueue)
     }
 
     @Provides
@@ -60,6 +62,12 @@ class SyncModule {
     @Singleton
     fun topicQueue(): TopicQueue {
         return TopicQueue()
+    }
+
+    @Provides
+    @Singleton
+    fun messageUpdateQueue(): MessageQueue {
+        return MessageQueue()
     }
 
 

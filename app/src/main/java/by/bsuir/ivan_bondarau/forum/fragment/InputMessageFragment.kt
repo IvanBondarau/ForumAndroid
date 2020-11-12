@@ -56,7 +56,7 @@ class InputMessageFragment : Fragment() {
         val text = textInput.text.toString()
         val user = UserHolder.user
         val date = Calendar.getInstance().time
-        val message = Message(null, text, user!!.id!!, date, topicId!!)
+        val message = Message(null, text, date, topicId!!, user!!.id!!)
         messageRepository.save(message)
 
         (parentFragment?.childFragmentManager

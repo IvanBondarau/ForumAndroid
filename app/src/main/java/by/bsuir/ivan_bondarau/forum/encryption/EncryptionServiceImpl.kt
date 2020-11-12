@@ -2,7 +2,7 @@ package by.bsuir.ivan_bondarau.forum.encryption
 
 import org.mindrot.jbcrypt.BCrypt
 
-class EncryptionServiceImpl: EncryptionService {
+class EncryptionServiceImpl : EncryptionService {
 
     override fun encrypt(str: String): String {
         return BCrypt.hashpw(str, BCrypt.gensalt(16))

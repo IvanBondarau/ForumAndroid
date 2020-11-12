@@ -1,6 +1,5 @@
 package by.bsuir.ivan_bondarau.forum.fragment
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +7,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.RecyclerView
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.model.Topic
-
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,8 +28,8 @@ class TopicRecyclerViewAdapter(
         val topic = topics[position]
         holder.nameView.text = topic.name
         holder.lastMessageDateView.text =
-             if (topic.lastMessageDate == null) ""
-                else dateFormat.format(topic.lastMessageDate!!)
+            if (topic.lastMessageDate == null) ""
+            else dateFormat.format(topic.lastMessageDate!!)
 
         holder.messagesCountView.text =
             if (topic.messagesCount == null) ""

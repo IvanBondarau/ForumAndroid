@@ -8,13 +8,15 @@ import by.bsuir.ivan_bondarau.forum.dao.TopicDao
 import by.bsuir.ivan_bondarau.forum.dao.UserDao
 import by.bsuir.ivan_bondarau.forum.model.*
 
-@Database(entities = [
-    User::class,
-    Message::class,
-    Topic::class,
-    Label::class,
-    TopicLabelCrossRef::class
-], version = 11)
+@Database(
+    entities = [
+        User::class,
+        Message::class,
+        Topic::class,
+        Label::class,
+        TopicLabelCrossRef::class
+    ], version = 12
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 

@@ -1,31 +1,35 @@
 package by.bsuir.ivan_bondarau.forum.sync
 
-import android.content.Context
-import android.util.Log
-import androidx.hilt.Assisted
-import androidx.work.Worker
-import androidx.work.WorkerParameters
 import by.bsuir.ivan_bondarau.forum.dao.MessageDao
 import by.bsuir.ivan_bondarau.forum.model.Message
-import by.bsuir.ivan_bondarau.forum.service.MessageService
-
-import androidx.hilt.work.WorkerInject
 import by.bsuir.ivan_bondarau.forum.observer.Observable
 import by.bsuir.ivan_bondarau.forum.observer.Observer
+import by.bsuir.ivan_bondarau.forum.queue.MessageQueue
+import by.bsuir.ivan_bondarau.forum.service.MessageService
 import java.util.*
 import java.util.concurrent.locks.Lock
 import kotlin.concurrent.withLock
 
 
-public class MessageSyncTask constructor
-     (
-        private val messageDao: MessageDao,
-        private val messageService: MessageService,
-        private val messageQueue: Queue<Message>,
-        private val messageQueueLock: Lock
-    ) : TimerTask(), Observable {
+class MessageSyncTask constructor
+    (
+    private val messageDao: MessageDao,
+    private val messageService: MessageService,
+    private val messageQueue: Queue<Message>,
+    private val messageQueueLock: Lock,
+    private val messageUpdateQueue: MessageQueue
+) : TimerTask(), Observable {
 
     override fun run() {
+        messageUpdateQueue.lock.withLock {
+            messageUpdateQueue.queue.forEach {
+                messageService.update(it.id!!, it).execute()
+                messageDao.update(it)
+            }
+
+            messageUpdateQueue.queue.clear()
+        }
+
         messageQueueLock.withLock {
             messageQueue.forEach {
                 messageService.insert(it).execute()
@@ -34,10 +38,11 @@ public class MessageSyncTask constructor
             messageService.findAll().execute().body()?.forEach {
                 if (messageDao.findById(it.id!!) == null) {
                     messageDao.insert(it)
+                } else {
+                    messageDao.update(it)
                 }
             }
         }
-        Log.d("Message sync", "Tuta")
         notifyObserver()
     }
 
@@ -49,7 +54,6 @@ public class MessageSyncTask constructor
 
     override fun notifyObserver() {
         observers.forEach {
-            Log.d("MessageSyncWorker", "Notified")
             it.update()
         }
     }

@@ -2,15 +2,13 @@ package by.bsuir.ivan_bondarau.forum.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
-import androidx.fragment.app.commit
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.factory.MessageViewModelFactory
 import by.bsuir.ivan_bondarau.forum.model.MessageWithAuthor
@@ -22,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MessageListFragment: Fragment(), Observer {
+class MessageListFragment : Fragment(), Observer {
 
     @Inject
     lateinit var messageRepository: MessageRepository
@@ -54,7 +52,8 @@ class MessageListFragment: Fragment(), Observer {
                 .get(MessageViewModel::class.java)
 
         messages = messageViewModel.messages.toMutableList()
-        recyclerViewAdapter =  MessageRecyclerViewAdapter(messages)
+        recyclerViewAdapter =
+            MessageRecyclerViewAdapter(messages, messageViewModel, activity?.resources!!)
     }
 
 
@@ -62,7 +61,7 @@ class MessageListFragment: Fragment(), Observer {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("TEST2",savedInstanceState?.toString() ?: "BABABABAB")
+        Log.d("TEST2", savedInstanceState?.toString() ?: "BABABABAB")
         val bundle = arguments
         if (bundle?.getInt("topicId") != null) {
             updateData(bundle)

@@ -26,6 +26,9 @@ interface MessageDao {
     @Query("select count(*) from message where topicId = :topicId")
     fun countTopicMessages(topicId: Int): Int
 
+    @Update
+    fun update(message: Message)
+
     @Delete
     fun delete(message: Message)
 

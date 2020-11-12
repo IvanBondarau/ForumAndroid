@@ -5,7 +5,7 @@ import androidx.room.Junction
 import androidx.room.Relation
 import by.bsuir.ivan_bondarau.forum.dto.TopicDto
 
-data class TopicWithLabels (
+data class TopicWithLabels(
     @Embedded
     val topic: Topic,
 
@@ -17,8 +17,10 @@ data class TopicWithLabels (
     val labels: Set<Label>
 
 ) {
-    fun toDto(): TopicDto = TopicDto(this.topic.topicId,
+    fun toDto(): TopicDto = TopicDto(
+        this.topic.topicId,
         this.topic.name,
         this.topic.creationDate,
-        this.labels.toList())
+        this.labels.toList()
+    )
 }

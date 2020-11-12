@@ -18,22 +18,24 @@ class UserRepository @Inject constructor(
 
     init {
         userDao.deleteAll()
-        userDao.insert(User(id = 1, username = "admin", email = "admin", password =
-        BCrypt.hashpw("admin", BCrypt.gensalt())))
+        userDao.insert(
+            User(
+                id = 1, username = "admin", email = "admin", password =
+                BCrypt.hashpw("admin", BCrypt.gensalt())
+            )
+        )
     }
 
-    fun findByUsername(username: String): User?
-        = userDao.findByUsername(username)
+    fun findByUsername(username: String): User? = userDao.findByUsername(username)
 
     fun create(user: User) {
         user.password = BCrypt.hashpw(user.password, BCrypt.gensalt())
-        val loaded = userService.insert(user).execute().body();
+        val loaded = userService.insert(user).execute().body()
         if (loaded != null) {
             user.id = loaded.id
         }
     }
 
-    fun isUsernameTaken(username: String) : Boolean
-        = userDao.findByUsername(username) != null
+    fun isUsernameTaken(username: String): Boolean = userDao.findByUsername(username) != null
 
 }

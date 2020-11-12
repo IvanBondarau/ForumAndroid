@@ -2,7 +2,6 @@ package by.bsuir.ivan_bondarau.forum.converter
 
 import androidx.room.TypeConverter
 import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
