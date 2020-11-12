@@ -3,7 +3,6 @@ package by.bsuir.ivan_bondarau.forum.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -13,7 +12,9 @@ import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.fragment.SettingsFragment
 import by.bsuir.ivan_bondarau.forum.fragment.TopicFragment
 import by.bsuir.ivan_bondarau.forum.holder.UserHolder
+import by.bsuir.ivan_bondarau.forum.sync.MessageSyncTask
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint

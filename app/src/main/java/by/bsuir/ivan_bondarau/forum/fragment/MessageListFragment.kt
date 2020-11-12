@@ -14,13 +14,15 @@ import androidx.lifecycle.ViewModelProvider
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.factory.MessageViewModelFactory
 import by.bsuir.ivan_bondarau.forum.model.MessageWithAuthor
+import by.bsuir.ivan_bondarau.forum.observer.Observer
 import by.bsuir.ivan_bondarau.forum.repository.MessageRepository
+import by.bsuir.ivan_bondarau.forum.sync.MessageSyncTask
 import by.bsuir.ivan_bondarau.forum.viewmodel.MessageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MessageListFragment: Fragment() {
+class MessageListFragment: Fragment(), Observer {
 
     @Inject
     lateinit var messageRepository: MessageRepository
@@ -32,10 +34,13 @@ class MessageListFragment: Fragment() {
 
     private var topicId: Int? = null
 
+    @Inject
+    lateinit var messageSyncTask: MessageSyncTask
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        messageSyncTask.attach(this)
         if (savedInstanceState?.getInt("topicId") != null) {
             updateData(savedInstanceState)
         }
@@ -106,5 +111,11 @@ class MessageListFragment: Fragment() {
         }
 
 
+    }
+
+    override fun update() {
+        activity?.runOnUiThread {
+            updateMessages()
+        }
     }
 }

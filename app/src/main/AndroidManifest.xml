@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="by.bsuir.ivan_bondarau.forum">
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ForumApp"
         android:allowBackup="true"
@@ -12,6 +14,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         >
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="by.bsuir.ivan_bondarau.forum.workmanager-init"
+            tools:node="remove" />
 
         <activity android:name=".activity.LoginActivity">
             <intent-filter>

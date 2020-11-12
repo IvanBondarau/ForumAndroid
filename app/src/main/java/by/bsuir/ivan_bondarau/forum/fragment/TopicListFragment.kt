@@ -1,6 +1,7 @@
 package by.bsuir.ivan_bondarau.forum.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,22 +12,27 @@ import androidx.recyclerview.widget.RecyclerView
 import by.bsuir.ivan_bondarau.forum.R
 import by.bsuir.ivan_bondarau.forum.factory.TopicViewModelFactory
 import by.bsuir.ivan_bondarau.forum.model.Topic
+import by.bsuir.ivan_bondarau.forum.observer.Observer
+import by.bsuir.ivan_bondarau.forum.sync.TopicSyncTask
 import by.bsuir.ivan_bondarau.forum.viewmodel.TopicViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class TopicListFragment : Fragment() {
+class TopicListFragment : Fragment(), Observer {
 
     @Inject
     lateinit var topicViewModelFactory: TopicViewModelFactory
     lateinit var topicViewModel: TopicViewModel
     lateinit var topics: MutableList<Topic>
     lateinit var recyclerViewAdapter: TopicRecyclerViewAdapter
+    @Inject
+    lateinit var topicSyncTask: TopicSyncTask
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        topicSyncTask.attach(this)
         topicViewModel = ViewModelProvider(this, topicViewModelFactory)
             .get(TopicViewModel::class.java)
         topics = topicViewModel.topics.toMutableList()
@@ -67,4 +73,11 @@ class TopicListFragment : Fragment() {
             TopicListFragment()
 
     }
+
+    override fun update() {
+        activity?.runOnUiThread {
+            updateTopics()
+        }
+    }
+
 }

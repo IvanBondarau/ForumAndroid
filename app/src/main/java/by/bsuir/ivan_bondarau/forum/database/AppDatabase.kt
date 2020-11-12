@@ -14,7 +14,7 @@ import by.bsuir.ivan_bondarau.forum.model.*
     Topic::class,
     Label::class,
     TopicLabelCrossRef::class
-], version = 10)
+], version = 11)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 

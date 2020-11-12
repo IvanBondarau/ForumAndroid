@@ -9,7 +9,7 @@ import androidx.room.*
     )]
 )
 data class User(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @PrimaryKey var id: Int? = null,
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "email")    var email: String,
     @ColumnInfo(name = "password") var password: String,

@@ -1,21 +1,25 @@
 package by.bsuir.ivan_bondarau.forum.repository
 
+import android.content.Context
 import by.bsuir.ivan_bondarau.forum.dao.UserDao
 import by.bsuir.ivan_bondarau.forum.model.User
+import by.bsuir.ivan_bondarau.forum.service.UserService
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserRepository @Inject constructor( private val userDao: UserDao) {
-
+@Singleton
+class UserRepository @Inject constructor(
+    private val userService: UserService,
+    private val userDao: UserDao,
+    @ApplicationContext context: Context
+) {
 
     init {
-        if (userDao.findByUsername("admin") == null) {
-            create(User(1, "admin", "admin@admin.com","admin"))
-        }
-
-        if (userDao.findByUsername("admin1") == null) {
-            create(User(2, "admin1", "admin@admin.com","admin"))
-        }
+        userDao.deleteAll()
+        userDao.insert(User(id = 1, username = "admin", email = "admin", password =
+        BCrypt.hashpw("admin", BCrypt.gensalt())))
     }
 
     fun findByUsername(username: String): User?
@@ -23,7 +27,10 @@ class UserRepository @Inject constructor( private val userDao: UserDao) {
 
     fun create(user: User) {
         user.password = BCrypt.hashpw(user.password, BCrypt.gensalt())
-        userDao.insert(user);
+        val loaded = userService.insert(user).execute().body();
+        if (loaded != null) {
+            user.id = loaded.id
+        }
     }
 
     fun isUsernameTaken(username: String) : Boolean
